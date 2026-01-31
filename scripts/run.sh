@@ -21,4 +21,10 @@ fi
 python manage.py collectstatic --noinput
 python manage.py migrate
 
-uwsgi --socket :9000 --workers 4 --master --enable-threads --module FoodNepal.wsgi
+# Local development: use socket (nginx proxy handles HTTP)
+# Production: use HTTP directly (no proxy available)
+if [ "$DEBUG" = "1" ]; then
+  uwsgi --socket :9000 --workers 4 --master --enable-threads --module FoodNepal.wsgi
+else
+  uwsgi --http :8000 --workers 4 --master --enable-threads --module FoodNepal.wsgi
+fi
