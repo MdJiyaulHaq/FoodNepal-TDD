@@ -3,16 +3,18 @@ services:
     build:
       context: .
     restart: unless-stopped
+    ports:
+      - "8000:8000"
     volumes:
       - static_data:/vol/web
     environment:
-      DB_HOST: db
-      DB_PORT: ${DB_PORT}
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      SECRET_KEY: ${DJANGO_SECRET_KEY}
-      ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
+      DB_HOST: ${DB_HOST:-db}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_NAME: ${DB_NAME:-mydatabase}
+      DB_USER: ${DB_USER:-myuser}
+      DB_PASSWORD: ${DB_PASSWORD:-mypassword}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-changeMe}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-0.0.0.0 127.0.0.1 localhost}
     depends_on:
       - db
 
@@ -22,11 +24,11 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME:-mydatabase}
+      POSTGRES_USER: ${DB_USER:-myuser}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-mypassword}
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U myuser -d mydatabase"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-myuser}"]
       interval: 5s
       timeout: 3s
       retries: 3
