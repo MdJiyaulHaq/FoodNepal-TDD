@@ -6,24 +6,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
+    <title>FoodNepal - Recipe Management API</title>
     <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 
 <body>
-    <h1>Welcome to FoodNepal</h1>
+    <header>
+        <h1>🍛 FoodNepal</h1>
+        <p>Recipe Management API - Test Driven Development</p>
+    </header>
 
-    <p>This is the home page of the FoodNepal application.</p>
+    <main>
+        <div class="card-container">
+            <div class="card">
+                <h3>📚 API Documentation</h3>
+                <p>Interactive Swagger UI with complete API specifications</p>
+                <a href="{% url 'swagger-ui' %}" class="btn">View Docs</a>
+            </div>
 
-    <ul>
-        <li><a href="{% url 'swagger-ui' %}">Documentation</a></li>
-        <li><a href="{% url 'admin:index' %}">Admin Dashboard</a></li>
-        <li><a href="{% url 'health-check' %}">Health Check</a></li>
-    </ul>
+            <div class="card">
+                <h3>⚙️ Admin Dashboard</h3>
+                <p>Manage recipes, ingredients, tags, and users</p>
+                <a href="{% url 'admin:index' %}" class="btn">Go to Admin</a>
+            </div>
+
+            <div class="card">
+                <h3>💚 Health Check</h3>
+                <p>Verify API status and system health</p>
+                <a href="{% url 'health-check' %}" class="btn">Check Status</a>
+            </div>
+        </div>
+    </main>
 
     <footer>
-        <p>&copy; 2025 FoodNepal. All rights reserved.</p>
+        <p>&copy; 2023 FoodNepal. All rights reserved.</p>
     </footer>
 </body>
 
