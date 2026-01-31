@@ -21,6 +21,15 @@ fi
 python manage.py collectstatic --noinput
 python manage.py migrate
 
+# Create initial superuser from environment variables (if provided)
+# Useful for first-time production setup
+if [ ! -z "$DJANGO_SUPERUSER_EMAIL" ] && [ ! -z "$DJANGO_SUPERUSER_PASSWORD" ]; then
+  python manage.py create_default_user \
+    --email="$DJANGO_SUPERUSER_EMAIL" \
+    --password="$DJANGO_SUPERUSER_PASSWORD" \
+    --name="${DJANGO_SUPERUSER_NAME:-Admin}" || true
+fi
+
 # Local development: use socket (nginx proxy handles HTTP)
 # Production: use HTTP directly (no proxy available)
 if [ "$DEBUG" = "1" ]; then
