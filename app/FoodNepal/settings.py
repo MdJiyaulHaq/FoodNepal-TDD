@@ -84,8 +84,8 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 
 if DATABASE_URL:
     DATABASES = {"default": dj_database_url.parse(DATABASE_URL, conn_max_age=600)}
-else:
-    # fallback for local/dev
+elif DEBUG:
+    # Development: use PostgreSQL with docker-compose
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
@@ -94,6 +94,14 @@ else:
             "PASSWORD": os.environ.get("DB_PASSWORD", "mypassword"),
             "HOST": os.environ.get("DB_HOST", "db"),
             "PORT": os.environ.get("DB_PORT", "5432"),
+        }
+    }
+else:
+    # Production: use SQLite (no database service needed)
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 
