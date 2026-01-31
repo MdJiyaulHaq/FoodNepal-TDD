@@ -40,7 +40,4 @@ class Command(BaseCommand):
             password=password,
             name=name,
         )
-        self.stdout.write(
-            self.style.SUCCESS(f"✅ Superuser created!\nEmail: {email}")
-        )
-
+        self.stdout.write(self.style.SUCCESS(f"✅ Superuser created!\nEmail: {email}"))
