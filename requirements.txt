@@ -25,3 +25,4 @@ uritemplate==4.2.0
 
 pillow == 11.2.1
 uwsgi == 2.0.30
+whitenoise == 6.6.0

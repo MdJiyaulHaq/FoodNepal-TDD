@@ -31,7 +31,7 @@ if [ ! -z "$DJANGO_SUPERUSER_EMAIL" ] && [ ! -z "$DJANGO_SUPERUSER_PASSWORD" ]; 
 fi
 
 # Local development: use socket (nginx proxy handles HTTP)
-# Production: use HTTP directly (no proxy available)
+# Production: use HTTP directly (WhiteNoise serves static files)
 if [ "$DEBUG" = "1" ]; then
   uwsgi --socket :9000 --workers 4 --master --enable-threads --module FoodNepal.wsgi
 else
