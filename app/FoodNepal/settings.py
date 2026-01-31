@@ -98,10 +98,11 @@ elif DEBUG:
     }
 else:
     # Production: use SQLite (no database service needed)
+    # Store in /vol/web which is writable by django-user
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
+            "NAME": "/vol/web/db.sqlite3",
         }
     }
 
