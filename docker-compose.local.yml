@@ -1,0 +1,41 @@
+services:
+  web:
+    build:
+      context: .
+      args:
+        - DEV=true
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app
+      - dev_static_data:/vol/web
+    command: sh -c "while ! pg_isready -h db -p 5432 -U myuser; do sleep 1; done && chmod -R 777 /vol/web && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: mydatabase
+      DB_USER: myuser
+      DB_PASSWORD: mypassword
+      DEBUG: 1
+
+    depends_on:
+      - db
+
+  db:
+    image: postgres:17-alpine
+    volumes:
+      - dev_db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d mydatabase"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+
+volumes:
+  dev_db_data:
+  dev_static_data:

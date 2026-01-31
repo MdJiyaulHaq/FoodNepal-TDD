@@ -19,14 +19,14 @@ pipeline {
 
         stage('Run Linter') {
             steps {
-                sh 'docker compose run --rm web sh -c "flake8"'
+                sh 'docker compose -f docker-compose.local.yml run --rm web sh -c "flake8"'
             }
         }
 
         stage('Run Tests') {
             steps {
                 sh """
-                    docker compose run --rm web sh -c "while ! pg_isready -h db -p 5432 -U myuser; do sleep 1; done && pytest"
+                    docker compose -f docker-compose.local.yml run --rm web sh -c "while ! pg_isready -h db -p 5432 -U myuser; do sleep 1; done && pytest"
                 """
             }
         }
