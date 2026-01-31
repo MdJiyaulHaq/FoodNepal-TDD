@@ -26,5 +26,5 @@ python manage.py migrate
 if [ "$DEBUG" = "1" ]; then
   uwsgi --socket :9000 --workers 4 --master --enable-threads --module FoodNepal.wsgi
 else
-  uwsgi --http :8000 --workers 4 --master --enable-threads --module FoodNepal.wsgi
+  uwsgi --http :8000 --workers 4 --master --enable-threads --http-bufsize 65536 --module FoodNepal.wsgi
 fi
