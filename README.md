@@ -1,4 +1,4 @@
-# Food-Nepal 🧪
+# Food-Nepal
 
 A **TDD-First Django REST API** for recipe management with comprehensive test coverage.
 
